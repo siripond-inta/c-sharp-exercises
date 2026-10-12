@@ -1,0 +1,14 @@
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\bin\Debug\net10.0\Exercise2.exe
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\bin\Debug\net10.0\Exercise2.deps.json
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\bin\Debug\net10.0\Exercise2.runtimeconfig.json
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\bin\Debug\net10.0\Exercise2.dll
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\bin\Debug\net10.0\Exercise2.pdb
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\obj\Debug\net10.0\Exercise2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\obj\Debug\net10.0\Exercise2.AssemblyInfoInputs.cache
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\obj\Debug\net10.0\Exercise2.AssemblyInfo.cs
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\obj\Debug\net10.0\Exercise2.csproj.CoreCompileInputs.cache
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\obj\Debug\net10.0\Exercise2.dll
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\obj\Debug\net10.0\refint\Exercise2.dll
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\obj\Debug\net10.0\Exercise2.pdb
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\obj\Debug\net10.0\Exercise2.genruntimeconfig.cache
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise2\obj\Debug\net10.0\ref\Exercise2.dll
