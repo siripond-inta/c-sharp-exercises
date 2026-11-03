@@ -12,137 +12,105 @@ namespace HangmanGame
 
     public class HangmanService
     {
-        private string[] words = { "Software", "Engineering", "Developer", "Project", "Computer","Technology" };
+        private const int MaxTries = 10; // จำนวนครั้งในการเดา
+        private readonly string[] words =
+        {
+            "Softsquaregroup", "Traveller", "Software", "Engineering",
+            "Developer", "Project", "Computer", "Technology"
+        };
+
         private string targetWord;
         private List<char> guessedCharacters;
         private int remainingTries;
-        private Random random = new Random();
+        private readonly Random random = new Random();
 
         public HangmanService()
         {
             Restart();
         }
 
+        // ── Public API (ตาม Class Diagram) ──────────────────────────────────
+
+        /// เริ่มเกมใหม่ — สุ่มคำศัพท์จาก Array
         public void Restart()
         {
-            // สุ่มคำศัพท์จาก Array
-            int index = random.Next(words.Length);
-            targetWord = words[index];
+            targetWord = words[random.Next(words.Length)];
             guessedCharacters = new List<char>();
-            remainingTries = 10; // กำหนดให้ตอบผิดได้ 10 ครั้ง
+            remainingTries = MaxTries;
         }
 
+        /// แสดงผลปัจจุบัน
         public string GetDisplay()
         {
-            string display = "";
+            string lowerTarget = targetWord.ToLower();
+            var display = new System.Text.StringBuilder();
+
             for (int i = 0; i < targetWord.Length; i++)
             {
-                char c = targetWord[i];
-                char lowerC = char.ToLower(c);
+                if (i > 0) display.Append(' ');
 
-                // เช็คว่าเคยทายไปรึยัง
-                bool found = false;
-                for (int j = 0; j < guessedCharacters.Count; j++)
-                {
-                    if (guessedCharacters[j] == lowerC)
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (found)
-                {
-                    display += c + " ";
-                }
-                else
-                {
-                    display += "_ ";
-                }
+                display.Append(
+                    guessedCharacters.Contains(lowerTarget[i])
+                        ? targetWord[i].ToString()
+                        : "_"
+                );
             }
-            return display.TrimEnd();
+
+            return display.ToString();
         }
 
+        /// เช็คตัวอักษรที่ผู้เล่นป้อน
         public GuessResult Input(char character)
         {
-            char lowerChar = char.ToLower(character);
-            for (int i = 0; i < guessedCharacters.Count; i++)
-            {
-                if (guessedCharacters[i] == lowerChar)
-                {
-                    return GuessResult.Duplicate;
-                }
-            }
+            char lower = char.ToLower(character);
 
-            guessedCharacters.Add(lowerChar);
+            // ตรวจซ้ำ
+            if (guessedCharacters.Contains(lower))
+                return GuessResult.Duplicate;
 
-            // ตรวจสอบว่ามีตัวอักษรนี้ในคำศัพท์หรือไม่
-            bool isCorrect = false;
-            string lowerTarget = targetWord.ToLower();
-            for (int i = 0; i < lowerTarget.Length; i++)
-            {
-                if (lowerTarget[i] == lowerChar)
-                {
-                    isCorrect = true;
-                    break;
-                }
-            }
+            guessedCharacters.Add(lower);
 
-            if (isCorrect)
-            {
-                return GuessResult.Correct;
-            }
-            else
-            {
+            bool isCorrect = targetWord.ToLower().IndexOf(lower) >= 0;
+
+            if (!isCorrect)
                 remainingTries--;
-                return GuessResult.Incorrect;
-            }
+
+            return isCorrect ? GuessResult.Correct : GuessResult.Incorrect;
         }
 
-        public int GetRemainingTry()
-        {
-            return remainingTries;
-        }
+        /// จำนวนครั้งที่เหลือในการเดา
+        public int GetRemainingTry() => remainingTries;
 
-        public bool IsWon()
-        {
-            string currentDisplay = GetDisplay();
-            for (int i = 0; i < currentDisplay.Length; i++)
-            {
-                if (currentDisplay[i] == '_')
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+        /// ตรวจว่าชนะรึยัง
+        public bool IsWon() => !GetDisplay().Contains('_');
 
-        // เฉลย
-        public string GetTargetWord()
-        {
-            return targetWord;
-        }
+        /// เฉลย
+        public string GetTargetWord() => targetWord;
     }
+
+    // ── Entry Point ─────────────────────────────────────────────────────────
 
     class Program
     {
         static void Main(string[] args)
         {
             HangmanService game = new HangmanService();
+
             Console.WriteLine("=== Welcome to Hangman Game ===");
-            Console.WriteLine("(กด Enter โดยไม่พิมพ์ตัวอักษรเพื่อ Restart เกมใหม่)");
+            Console.WriteLine("(Press Enter without a character to restart)");
             Console.WriteLine();
 
             while (true)
             {
+                // แสดงสถานะปัจจุบัน
                 Console.WriteLine(game.GetDisplay());
                 Console.Write("please enter character: ");
                 string input = Console.ReadLine();
 
-                // กดปุ่ม Enter แต่ไม่ได้พิมพ์ให้เริ่มเล่นใหม่
+                // กด Enter เปล่า → Restart
                 if (input == "")
                 {
-                    Console.WriteLine("\n--- Restarting Game ---");
+                    Console.WriteLine("\n--- Restarting Game ---\n");
                     game.Restart();
                     continue;
                 }
@@ -150,35 +118,33 @@ namespace HangmanGame
                 char guessedChar = input[0];
                 GuessResult result = game.Input(guessedChar);
 
-                if (result == GuessResult.Correct)
+                Console.WriteLine();
+                // ใช้ switch แทน if else
+                switch (result)
                 {
-                    Console.WriteLine();
-                    // ถ้าตอบถูกครบ
-                    if (game.IsWon())
-                    {
-                        Console.WriteLine(game.GetDisplay());
-                        Console.WriteLine("Congratulation, you're win.");
-                        Console.WriteLine("\nเริ่มเกมใหม่...");
-                        game.Restart();
-                    }
-                }
-                else if (result == GuessResult.Incorrect)
-                {
-                    // ไม่มีในคำ
-                    Console.WriteLine("Sorry, you're wrong. Remaining " + game.GetRemainingTry());
-                }
-                else if (result == GuessResult.Duplicate)
-                {
-                    // ตัวอักษรถูกทายไปแล้ว
-                    Console.WriteLine("you have already tried this character.");
-                }
+                    case GuessResult.Correct:
+                        Console.WriteLine(game.GetDisplay());       // แสดง progress ทันที
+                        if (game.IsWon())
+                        {
+                            Console.WriteLine("\nCongratulation, you're win.");
+                            Console.WriteLine("\n--- Starting new game ---\n");
+                            game.Restart();
+                        }
+                        break;
 
-                // จำนวนครั้งหมด
-                if (game.GetRemainingTry() <= 0)
-                {
-                    Console.WriteLine("\nGame Over! The word was: " + game.GetTargetWord());
-                    Console.WriteLine("เริ่มเกมใหม่...");
-                    game.Restart();
+                    case GuessResult.Incorrect:
+                        Console.WriteLine($"Sorry, you're wrong. Remaining {game.GetRemainingTry()}");
+                        if (game.GetRemainingTry() <= 0)
+                        {
+                            Console.WriteLine($"\nGame Over! The word was: {game.GetTargetWord()}");
+                            Console.WriteLine("\n--- Starting new game ---\n");
+                            game.Restart();
+                        }
+                        break;
+
+                    case GuessResult.Duplicate:
+                        Console.WriteLine("you have already tried this character.");
+                        break;
                 }
 
                 Console.WriteLine("------------------------------");
