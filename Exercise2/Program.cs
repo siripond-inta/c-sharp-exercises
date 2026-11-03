@@ -75,13 +75,13 @@ class Program
             return balance;
         }
         balance -= amount;
-        Console.WriteLine($"Account balance is : {balance}");
+        Console.WriteLine($"Account balance is : {balance}"); //ใช้ $ ในการรวม string กับตัวแปร
         return balance;
     }
 
     static void PrintBalance(decimal balance)
     {
-        Console.WriteLine($"Account balance is: {balance}");
+        Console.WriteLine($"Account balance is: {balance}"); //ใช้ $ ในการรวม string กับตัวแปร
     }
 
     static void WaitUser()
