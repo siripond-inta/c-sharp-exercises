@@ -1,7 +1,7 @@
 using System;
-using System.Threading;
 
-class dice
+// ชื่อ class ต้องเป็นตัวพิมพ์ใหญ่
+class Dice
 {
     private Random rnd = new Random();
 
@@ -10,4 +10,3 @@ class dice
         return rnd.Next(1, 7);
     }
 }
-

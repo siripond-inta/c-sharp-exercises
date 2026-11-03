@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 
 class Box
 {
@@ -9,42 +8,31 @@ class Box
 
     public Box(double width, double height, double length)
     {
-        this.width = width;
+        this.width  = width;
         this.height = height;
         this.length = length;
     }
 
     public Box(double side)
     {
-        this.width = side;
+        this.width  = side;
         this.height = side;
         this.length = side;
     }
 
     public Box(Box oldBox)
     {
-        this.width = oldBox.width;
+        this.width  = oldBox.width;
         this.height = oldBox.height;
         this.length = oldBox.length;
     }
 
-    public double faceArea()
-    {
-        return width * height;
-    }
+    // คำนวณพื้นที่ผิวทั้งหมดจากพื้นที่ผิวแต่ละด้าน
+    public double FaceArea()  => width * height;
+    public double TopArea()   => width * length;
+    public double SideArea()  => height * length;
+    public double Area()      => 2 * FaceArea() + 2 * TopArea() + 2 * SideArea();
 
-    public double topArea()
-    {
-        return width * length;
-    }
-
-    public double sideArea()
-    {
-        return height * length;
-    }
-
-    public double area()
-    {
-        return 2 * faceArea() + 2 * topArea() + 2 * sideArea();
-    }
+    public override string ToString()
+        => $"Box({width} x {height} x {length}) | Surface Area = {Area():F2}";
 }
