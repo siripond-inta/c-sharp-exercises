@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        int balance = 100;
+        decimal balance = 100; //เปลี่ยนเป็น decimal เพราะเป็น Type สำหรับเงิน
         bool isRunning = true;
 
         while (isRunning)
@@ -18,66 +18,70 @@ class Program
             Console.WriteLine(" 0. Exit");
             Console.Write("Select number : ");
 
-            string choice = Console.ReadLine();
+             string choice = Console.ReadLine() ?? string.Empty;
             Console.WriteLine();
 
-            switch (choice)
+            // แยกเป็น case ของแต่ละเมนู กับ method แต่ละเมนู
+    switch (choice)
             {
-                case "1": // ฝากเงิน
-                    Console.Write("Enter money to deposit : ");
-                    int depositAmount = int.Parse(Console.ReadLine());
-                    
-                    if (depositAmount > 0)
-                    {
-                        balance += depositAmount;
-                        Console.WriteLine("Account balance is : " + balance);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid amount.");
-                    }
+                case "1":
+                    balance = Deposit(balance);
                     WaitUser();
                     break;
-
-                case "2": // ถอนเงิน
-                    Console.Write("Enter money to withdraw : ");
-                    int withdrawAmount = int.Parse(Console.ReadLine());
-
-                    if (withdrawAmount > 0)
-                    {
-                        // เช็คว่าถอนแล้วเหลือต่ำกว่า 100 บาทหรือไม่
-                        if (balance - withdrawAmount < 100)
-                        {
-                            Console.WriteLine("Cannot withdraw because money will less 100");
-                        }
-                        else
-                        {
-                            balance -= withdrawAmount;
-                            Console.WriteLine("Account balance is : " + balance);
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid amount.");
-                    }
+                case "2":
+                    balance = Withdraw(balance);
                     WaitUser();
                     break;
-
-                case "3": // เช็คยอดเงิน
-                    Console.WriteLine("Account balance is : " + balance);
+                case "3":
+                    PrintBalance(balance);
                     WaitUser();
                     break;
-
-                case "0": // จบ
+                case "0":
                     isRunning = false;
+                    Console.WriteLine("Goodbye!");
                     break;
-
                 default:
-                    Console.WriteLine("Invalid selection.");
+                    Console.WriteLine("Invalid selection. Please choose 0-3.");
                     WaitUser();
                     break;
             }
         }
+    }
+
+    static decimal Deposit(decimal balance)
+    {
+         Console.Write("Enter amount to deposit: ");
+        if (!decimal.TryParse(Console.ReadLine(), out decimal amount) || amount <= 0)
+        {
+            Console.WriteLine("Invalid amount. Please enter a positive number.");
+            return balance;
+        }
+        balance += amount;
+        Console.WriteLine($"Account balance is {balance}"); //ใช้ $ ในการรวม string กับตัวแปร
+        return balance;
+    }
+
+    static decimal Withdraw(decimal balance)
+    {
+        Console.Write("Enter amount to withdraw: ");
+        if (!decimal.TryParse(Console.ReadLine(), out decimal amount) || amount <= 0)
+        {
+            Console.WriteLine("Invalid amount. Please enter a positive number.");
+            return balance;
+        }
+        if (balance - amount < 100)
+        {
+            Console.WriteLine("Cannot withdraw because money will be less than 100");
+            return balance;
+        }
+        balance -= amount;
+        Console.WriteLine($"Account balance is : {balance}");
+        return balance;
+    }
+
+    static void PrintBalance(decimal balance)
+    {
+        Console.WriteLine($"Account balance is: {balance}");
     }
 
     static void WaitUser()
