@@ -29,9 +29,8 @@ namespace HangmanGame
             Restart();
         }
 
-        // ── Public API (ตาม Class Diagram) ──────────────────────────────────
-
-        /// เริ่มเกมใหม่ — สุ่มคำศัพท์จาก Array
+       
+        // เริ่มเกมใหม่
         public void Restart()
         {
             targetWord = words[random.Next(words.Length)];
@@ -39,7 +38,7 @@ namespace HangmanGame
             remainingTries = MaxTries;
         }
 
-        /// แสดงผลปัจจุบัน
+        // แสดงผลปัจจุบัน
         public string GetDisplay()
         {
             string lowerTarget = targetWord.ToLower();
@@ -59,7 +58,7 @@ namespace HangmanGame
             return display.ToString();
         }
 
-        /// เช็คตัวอักษรที่ผู้เล่นป้อน
+        // เช็คตัวอักษรที่ผู้เล่นป้อน
         public GuessResult Input(char character)
         {
             char lower = char.ToLower(character);
@@ -78,13 +77,13 @@ namespace HangmanGame
             return isCorrect ? GuessResult.Correct : GuessResult.Incorrect;
         }
 
-        /// จำนวนครั้งที่เหลือในการเดา
+        // จำนวนครั้งที่เหลือในการเดา
         public int GetRemainingTry() => remainingTries;
 
-        /// ตรวจว่าชนะรึยัง
+        // ตรวจว่าชนะรึยัง
         public bool IsWon() => !GetDisplay().Contains('_');
 
-        /// เฉลย
+        // เฉลย
         public string GetTargetWord() => targetWord;
     }
 
@@ -116,6 +115,13 @@ namespace HangmanGame
                 }
 
                 char guessedChar = input[0];
+                // ดักสัญลักษณ์ ที่ไม่ใช่ตัวอักษร
+                if (!char.IsLetter(guessedChar))
+                {
+                    Console.WriteLine("Please enter a letter only.");
+                    continue;
+                }
+
                 GuessResult result = game.Input(guessedChar);
 
                 Console.WriteLine();

@@ -12,3 +12,4 @@ C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise3\
 C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise3\obj\Debug\net10.0\Exercise3.pdb
 C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise3\obj\Debug\net10.0\Exercise3.genruntimeconfig.cache
 C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise3\obj\Debug\net10.0\ref\Exercise3.dll
+C:\Users\intas\OneDrive\Desktop\สหกิจ\C# Exercise\C# Answer\Exercise3\obj\Debug\net10.0\Exercise3.sourcelink.json
